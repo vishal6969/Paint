@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint-board</title>
+    <style>
+        body{
+            overflow: hidden;
+        }
+        div {
+            height:30px;
+            width:30px;
+            position:fixed;
+            border:1px solid black;
+        }
+        div#red{
+            left:90%;
+            top:25%;
+            background-color: red;
+        }
+        div#yellow{
+            left:90%;
+            top:32%;
+            background-color:yellow;
+        }
+        div#blue{
+            left:90%;
+            top:39%;
+            background-color:blue;
+        }
+        div#pink{
+            left:90%;
+            top:46%;
+            background-color: pink;
+        }
+        div#black{
+            left:90%;
+            top:53%;
+            background-color: black;
+        }
+        div#orange{
+            left:90%;
+            top:60%;
+            background-color: orange;
+        }
+        div#purple{
+            left:90%;
+            top:67%;
+            background-color:purple;
+        }
+    </style>
+</head>
+<body>
+    <div id="red" onclick="setColor('red')"></div>
+    <div id="yellow" onclick="setColor('yellow')"></div>
+    <div id="blue" onclick="setColor('blue')"></div>
+    <div id="pink" onclick="setColor('pink')"></div>
+    <div id="black" onclick="setColor('black')"></div>
+    <div id="orange" onclick="setColor('orange')"></div>
+    <div id="purple" onclick="setColor('purple')"></div>
+    <canvas id="canvas">
+        
+    </canvas>
+</body>
+<script>
+const canvas=document.querySelector("#canvas");
+function canvasSize(){
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+}
+canvasSize();
+window.addEventListener("resize",canvasSize);
+
+const ctx=canvas.getContext("2d");
+let temp=false;
+
+function setColor(e){
+    ctx.strokeStyle=e;
+}
+function start(e){
+    temp=true;
+    ctx.moveTo(e.clientX,e.clientY);
+    ctx.beginPath();
+    draw(e);
+}
+
+function finish(){
+    temp=false;
+} 
+
+function draw(e){
+    if(!temp)
+    return;
+    ctx.lineCap="round";
+    ctx.lineWidth=5;
+    ctx.lineTo(e.clientX,e.clientY);
+    ctx.stroke();
+}
+canvas.addEventListener("mousedown",start);
+canvas.addEventListener("mouseup",finish);
+canvas.addEventListener("mousemove",draw);
+</script>
+</html>
